@@ -34,23 +34,21 @@ gcloud compute addresses describe example-lab-base-image --region=us-central1 --
 
 ## 2. Configure VM Instance
 
-Create a VM with the following labels for cost control:
-- always_up: false
-- owner: your_name
-- skip_shutdown: false
-- tf_created: false
+Create an Ubuntu VM with the following ports allowed inbound
+- allow inbound http/https/ssh/8000 (adjust network tags)
+- adjust your service-account name, YOUR_EXTERNAL_IP
 
 ```bash
 gcloud compute instances create example-lab-base-image \
     --project=example-project-123456 \
     --zone=us-central1-c \
     --machine-type=e2-standard-8 \
-    --network-interface=address=10.20.30.40,network-tier=PREMIUM,stack-type=IPV4_ONLY,subnet=example-subnet \
+    --network-interface=address=YOUR_EXTERNAL_IP,network-tier=PREMIUM,stack-type=IPV4_ONLY,subnet=example-subnet \
     --maintenance-policy=MIGRATE \
     --provisioning-model=STANDARD \
     --service-account=example-sa@example-project-123456.iam.gserviceaccount.com \
     --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/trace.append \
-    --tags=akeyless-inbound,allow-all-outbound,http-server,https-server,ssh-server \
+    --tags=my-inbound-rules,allow-all-outbound,http-server,https-server,ssh-server \
     --create-disk=auto-delete=yes,boot=yes,device-name=example-lab-base-image-disk,image=projects/ubuntu-os-cloud/global/images/ubuntu-2404-noble-amd64-v20250130,mode=rw,size=200,type=pd-balanced \
     --no-shielded-secure-boot \
     --shielded-vtpm \
@@ -72,7 +70,7 @@ Set your environment variables:
 ```bash
 # Environment Variables
 EMAIL="user@example.com"
-PUBLIC_IP="10.20.30.40"
+PUBLIC_IP="YOUR_EXTERNAL_IP"
 
 # Confirm you have these variables set:
 echo $EMAIL
