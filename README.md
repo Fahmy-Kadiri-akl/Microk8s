@@ -536,7 +536,7 @@ sra:
 
 ## 8. Large Header Support
 
-If you encounter errors like this:
+You may see these errors when implementing K8s auth and other integrations.
 
 ```
 failed to create k8s auth config: Failed to create k8s auth config. Status 400 Bad Request. Unexpected error reply object, Status: 400 Bad Request. Body: <html>
