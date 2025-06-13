@@ -552,8 +552,17 @@ failed to create k8s auth config: Failed to create k8s auth config. Status 400 B
 You'll need to modify the NGINX ConfigMap:
 
 ```bash
-kubectl get ingress -A
-kubectl get configmap <ingress name> -n ingress -o yaml > nginx-configmap.yaml
+kubectl get configmap -n ingress
+kubectl describe configmap nginx-load-balancer-microk8s-conf -n ingress
+kubectl edit configmap nginx-load-balancer-microk8s-conf -n ingress
+
+
+
+#add this to the very bottom of the config
+data:
+  large-client-header-buffers: "4 64k"
+  client-header-buffer-size: "64k"
+  http2-max-header-size: "64k"
 ```
 
 Add the following to the bottom of the config:
