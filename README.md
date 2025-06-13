@@ -556,18 +556,7 @@ kubectl get configmap -n ingress
 kubectl describe configmap nginx-load-balancer-microk8s-conf -n ingress
 kubectl edit configmap nginx-load-balancer-microk8s-conf -n ingress
 
-
-
 #add this to the very bottom of the config
-data:
-  large-client-header-buffers: "4 64k"
-  client-header-buffer-size: "64k"
-  http2-max-header-size: "64k"
-```
-
-Add the following to the bottom of the config:
-
-```yaml
 data:
   large-client-header-buffers: "4 64k"
   client-header-buffer-size: "64k"
